@@ -35,3 +35,15 @@ func Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, echo.Map{"token": tokenStr})
 
 }
+
+
+// this the user profile
+
+func GetProfile(c echo.Context) error{
+	user:=c.Get("user").(*JWTCustomClaims)
+
+	return c.JSON(http.StatusOK,echo.Map{
+		"email": user.Email,
+		"role":user.Role,
+	})
+}
