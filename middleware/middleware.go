@@ -8,8 +8,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func JWTMiddleware(rrole string) echo.MiddlewareFunc {
+
+//this is a wropper function for the middleware 
+func JWTMiddleware(requiredRole string) echo.MiddlewareFunc {
+
+	//and here we are returning a middleware to the called router
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
+
+		//and this middleware is returning a function 
 		return func(c echo.Context) error {
 			authHeader := c.Request().Header.Get("Authorization")
 			if authHeader == "" {
@@ -27,7 +33,7 @@ func JWTMiddleware(rrole string) echo.MiddlewareFunc {
 				return c.JSON(http.StatusUnauthorized, echo.Map{"error": "Invalid or expired Error"})
 			}
 			claims := token.Claims.(*JWTCustomClaims)
-			if rrole != "" && claims.Role != rrole {
+			if requiredRole != "" && claims.Role != requiredRole {
 				return c.JSON(http.StatusForbidden, echo.Map{"error": "Forbidden: Insufficient role"})
 
 			}

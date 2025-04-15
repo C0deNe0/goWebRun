@@ -10,10 +10,10 @@ import (
 
 func CreateJwtToken(userId string, userName string) (string, error) {
 	claims := jwt.MapClaims{
-		"user_id":    userId,
-		"user_name":  userName,
-		"iat":        time.Now().Unix(),
-		"exp":        time.Now().Add(time.Hour * 24 * 360).Unix(),
+		"user_id":   userId,
+		"user_name": userName,
+		"iat":       time.Now().Unix(),
+		"exp":       time.Now().Add(time.Hour * 24 * 360).Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -29,7 +29,7 @@ func CreateJwtToken(userId string, userName string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
+//hello there
 	return signedToken, nil
 }
 
